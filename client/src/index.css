@@ -1,0 +1,26 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-gray-900 text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-white text-gray-900 px-6 py-2 rounded-lg hover:bg-gray-50 transition font-medium border-2 border-gray-200;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r;
+  }
+}

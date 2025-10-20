@@ -106,6 +106,9 @@ import Button from '../common/Button';
 import Modal from '../common/Modal';
 import { useAuth } from '../../context/AuthContext';
 
+// Get API base URL from environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
 const Dashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -124,7 +127,7 @@ const Dashboard = () => {
     const fetchRecentResumes = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch('http://localhost:5000/api/resume', {
+        const response = await fetch(`${API_BASE_URL}/api/resume`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -242,7 +245,7 @@ const Dashboard = () => {
   const handleEnhanceResume = async (resumeId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/ai/generate-summary', {
+      const response = await fetch(`${API_BASE_URL}/api/ai/generate-summary`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -275,7 +278,7 @@ const Dashboard = () => {
       let url, options;
 
       if (format === 'pdf') {
-        url = `http://localhost:5000/api/resume/export/pdf/${resumeId}`;
+        url = `${API_BASE_URL}/api/resume/export/pdf/${resumeId}`;
         options = {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -298,7 +301,7 @@ const Dashboard = () => {
         }
       } else if (format === 'docx') {
         // Similar implementation for DOCX
-        url = `http://localhost:5000/api/resume/export/docx/${resumeId}`;
+        url = `${API_BASE_URL}/api/resume/export/docx/${resumeId}`;
         options = {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -335,7 +338,7 @@ const Dashboard = () => {
   const handleGenerateShareLink = async (resumeId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/resume/share', {
+      const response = await fetch(`${API_BASE_URL}/api/resume/share`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

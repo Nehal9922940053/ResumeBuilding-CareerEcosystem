@@ -4,10 +4,10 @@ client/node_modules/
 server/node_modules/
 
 # Production builds
-/dist
+# /dist
 /build
-client/dist
-client/build
+# client/dist
+# client/build
 server/dist
 
 # Environment variables
@@ -66,7 +66,7 @@ client/.eslintcache
 
 # Vite cache and build output
 client/.vite
-client/dist
+# client/dist
 
 # Serverless directories (if applicable)
 .serverless/

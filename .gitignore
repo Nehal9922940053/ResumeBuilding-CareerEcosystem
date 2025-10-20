@@ -121,7 +121,7 @@ client/.env.production.local
 # AI model files (if downloading any local models)
 *.bin
 *.gguf
-models/
+
 
 # SSL certificates (if using self-signed certs for development)
 *.key

@@ -15,7 +15,14 @@ const updateProfile = async (req, res) => {
       req.user.id,
       { fullName, phone, location, website, linkedin, github, bio },
       { new: true, runValidators: true }
-    );
+    ).select('-password');
+
+       if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
 
     res.status(200).json({
       success: true,

@@ -183,20 +183,43 @@ const Profile = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+    const [initialLoad, setInitialLoad] = useState(true);
 
-  // Initialize form with user data
+  // Fetch complete profile data on component mount
   useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success && data.data) {
+            setFormData({
+              fullName: data.data.fullName || '',
+              email: data.data.email || '',
+              phone: data.data.phone || '',
+              location: data.data.location || '',
+              linkedin: data.data.linkedin || '',
+              github: data.data.github || '',
+              website: data.data.website || '',
+              bio: data.data.bio || ''
+            });
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
+      } finally {
+        setInitialLoad(false);
+      }
+    };
+
     if (user) {
-      setFormData({
-        fullName: user.fullName || user.name || '',
-        email: user.email || '',
-        phone: user.phone || '',
-        location: user.location || '',
-        linkedin: user.linkedin || '',
-        github: user.github || '',
-        website: user.website || '',
-        bio: user.bio || ''
-      });
+      fetchUserProfile();
     }
   }, [user]);
 
@@ -206,7 +229,6 @@ const Profile = () => {
       ...prev,
       [name]: value
     }));
-    // Clear save message when user starts typing
     if (saveMessage) setSaveMessage('');
   };
 
@@ -242,14 +264,14 @@ const Profile = () => {
       }
 
       if (data.success) {
-        // Update user in context
+        // Update user in context with the complete user data
         updateUser(data.data);
         setSaveMessage('Profile updated successfully!');
-         setTimeout(() => {
-          navigate('/dashboard'); // Navigate to dashboard
+        
+        setTimeout(() => {
+          navigate('/dashboard');
         }, 1500);
         
-        // Clear success message after 3 seconds
         setTimeout(() => {
           setSaveMessage('');
         }, 3000);
@@ -262,7 +284,7 @@ const Profile = () => {
     }
   };
 
-  if (authLoading) {
+   if (authLoading || initialLoad) {
     return (
       <div className="min-h-screen bg-gray-50 p-8 flex items-center justify-center">
         <div className="text-center">

@@ -294,7 +294,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const updateUser = (userData) => {
-    setUser(prevUser => ({ ...prevUser, ...userData }));
+    setUser(prevUser => ({
+      ...prevUser,
+      ...userData
+    }));
   };
 
   const clearError = () => {
@@ -302,6 +305,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const value = {
+     updateUser,
     user,
     login,
     register,

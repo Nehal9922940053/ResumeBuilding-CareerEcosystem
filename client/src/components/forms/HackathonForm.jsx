@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 const HackathonForm = () => {
   const { resumeData, updateResumeData } = useResume();
-  const [hackathons, setHackathons] = useState(resumeData.hackathons || []);
+const hackathons = resumeData.hackathons || [];
 
   const addHackathon = () => {
     const newHackathon = {
@@ -17,22 +17,22 @@ const HackathonForm = () => {
       achievements: '',
       projectUrl: ''
     };
-    setHackathons([...hackathons, newHackathon]);
+     const updatedHackathons = [...hackathons, newHackathon];
+    updateResumeData('hackathons', updatedHackathons);
   };
 
   const updateHackathon = (index, field, value) => {
     const updated = hackathons.map((hackathon, i) => 
       i === index ? { ...hackathon, [field]: value } : hackathon
     );
-    setHackathons(updated);
     updateResumeData('hackathons', updated);
   };
 
   const removeHackathon = (index) => {
     const updated = hackathons.filter((_, i) => i !== index);
-    setHackathons(updated);
     updateResumeData('hackathons', updated);
   };
+
 
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6">

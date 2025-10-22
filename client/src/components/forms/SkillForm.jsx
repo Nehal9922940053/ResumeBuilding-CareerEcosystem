@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 const SkillForm = () => {
   const { resumeData, updateResumeData } = useResume();
-  const [skills, setSkills] = useState(resumeData.skills || []);
+const skills = resumeData.skills || [];
 
   const addSkill = () => {
     const newSkill = {
@@ -14,20 +14,21 @@ const SkillForm = () => {
       category: '',
       level: ''
     };
-    setSkills([...skills, newSkill]);
+   const updatedSkills = [...skills, newSkill];
+    updateResumeData('skills', updatedSkills);
   };
 
   const updateSkill = (index, field, value) => {
     const updated = skills.map((skill, i) => 
       i === index ? { ...skill, [field]: value } : skill
     );
-    setSkills(updated);
+    // setSkills(updated);
     updateResumeData('skills', updated);
   };
 
   const removeSkill = (index) => {
     const updated = skills.filter((_, i) => i !== index);
-    setSkills(updated);
+    // setSkills(updated);
     updateResumeData('skills', updated);
   };
 

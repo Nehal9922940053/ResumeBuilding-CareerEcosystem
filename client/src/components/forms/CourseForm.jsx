@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 const CourseForm = () => {
   const { resumeData, updateResumeData } = useResume();
-  const [courses, setCourses] = useState(resumeData.courses || []);
+const courses = resumeData.courses || [];
 
   const addCourse = () => {
     const newCourse = {
@@ -16,23 +16,21 @@ const CourseForm = () => {
       certificateUrl: '',
       skills: ''
     };
-    setCourses([...courses, newCourse]);
+      const updatedCourses = [...courses, newCourse];
+    updateResumeData('courses', updatedCourses);
   };
 
   const updateCourse = (index, field, value) => {
     const updated = courses.map((course, i) => 
       i === index ? { ...course, [field]: value } : course
     );
-    setCourses(updated);
     updateResumeData('courses', updated);
   };
 
   const removeCourse = (index) => {
     const updated = courses.filter((_, i) => i !== index);
-    setCourses(updated);
     updateResumeData('courses', updated);
   };
-
   return (
     <div className="bg-white rounded-2xl shadow-sm p-6">
       <div className="flex justify-between items-center mb-6">

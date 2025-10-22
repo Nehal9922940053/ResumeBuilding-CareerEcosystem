@@ -1,10 +1,11 @@
 import React from 'react';
 import { FileText, Settings, User, LogOut, Home } from 'lucide-react';
 import { useAuth } from '../../hooks/useAuth';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const menuItems = [
     { icon: Home, label: 'Dashboard', href: '/dashboard' },
@@ -12,6 +13,17 @@ const Sidebar = () => {
     { icon: User, label: 'Profile', href: '/profile' },
     { icon: Settings, label: 'Settings', href: '/settings' },
   ];
+
+
+
+  const handleLogout = async () => {
+  try {
+    await logout();
+    navigate('/');
+  } catch (error) {
+    console.log("Logout error:", error);
+  }
+}
 
   return (
     <div className="w-64 bg-white shadow-sm min-h-screen p-6">
@@ -54,7 +66,7 @@ const Sidebar = () => {
         </div>
 
         <button
-          onClick={logout}
+          onClick={handleLogout}
           className="flex items-center space-x-3 px-4 py-3 text-gray-700 rounded-lg hover:bg-red-50 hover:text-red-600 transition w-full mt-2"
         >
           <LogOut className="w-5 h-5" />

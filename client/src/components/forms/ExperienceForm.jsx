@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 const ExperienceForm = () => {
   const { resumeData, updateResumeData } = useResume();
-  const [experiences, setExperiences] = useState(resumeData.experience || []);
+const experiences = resumeData.experience || [];
 
   const addExperience = () => {
     const newExperience = {
@@ -16,20 +16,22 @@ const ExperienceForm = () => {
       endDate: '',
       description: ''
     };
-    setExperiences([...experiences, newExperience]);
+    // setExperiences([...experiences, newExperience]);
+    const updatedExperiences = [...experiences, newExperience];
+    updateResumeData('experience', updatedExperiences);
   };
 
   const updateExperience = (index, field, value) => {
     const updated = experiences.map((exp, i) => 
       i === index ? { ...exp, [field]: value } : exp
     );
-    setExperiences(updated);
+    // setExperiences(updated);
     updateResumeData('experience', updated);
   };
 
   const removeExperience = (index) => {
     const updated = experiences.filter((_, i) => i !== index);
-    setExperiences(updated);
+    // setExperiences(updated);
     updateResumeData('experience', updated);
   };
 

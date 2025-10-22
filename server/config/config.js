@@ -53,20 +53,22 @@ const config = {
   googleClientId: process.env.GOOGLE_CLIENT_ID,
   googleClientSecret: process.env.GOOGLE_CLIENT_SECRET,
   
-  // Frontend URL with fallback logic
-  frontendUrl: process.env.FRONTEND_URL || 
-    (process.env.NODE_ENV === 'production' 
-      ? 'https://resumebuilding-careerecosystem.netlify.app' 
-      : 'http://localhost:5173'),
+  // // Frontend URL with fallback logic
+  // frontendUrl: process.env.FRONTEND_URL || 
+  //   (process.env.NODE_ENV === 'production' 
+  //     ? 'https://resumebuilding-careerecosystem.netlify.app' 
+  //     : 'http://localhost:5000'),
   
-  // All allowed origins
+  // // All allowed origins
   allowedOrigins: process.env.ALLOWED_ORIGINS 
     ? process.env.ALLOWED_ORIGINS.split(',').map(origin => origin.trim())
     : [
         'http://localhost:5173',
-        'http://localhost:5000',
-        'https://resumebuilding-careerecosystem.netlify.app',
-      ],
+      'http://localhost:5000',
+        'http://127.0.0.1:5173',
+      'https://resumebuilding-careerecosystem.netlify.app'
+    ],
+       
 };
 
 // Validate required environment variables

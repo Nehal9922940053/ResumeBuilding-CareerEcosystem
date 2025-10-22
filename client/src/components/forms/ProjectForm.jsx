@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 const ProjectForm = () => {
   const { resumeData, updateResumeData } = useResume();
-  const [projects, setProjects] = useState(resumeData.projects || []);
+const projects = resumeData.projects || [];
 
   const addProject = () => {
     const newProject = {
@@ -18,20 +18,21 @@ const ProjectForm = () => {
       startDate: '',
       endDate: ''
     };
-    setProjects([...projects, newProject]);
+   const updatedProjects = [...projects, newProject];
+    updateResumeData('projects', updatedProjects);
   };
 
   const updateProject = (index, field, value) => {
     const updated = projects.map((project, i) => 
       i === index ? { ...project, [field]: value } : project
     );
-    setProjects(updated);
+    // setProjects(updated);
     updateResumeData('projects', updated);
   };
 
   const removeProject = (index) => {
     const updated = projects.filter((_, i) => i !== index);
-    setProjects(updated);
+    // setProjects(updated);
     updateResumeData('projects', updated);
   };
 

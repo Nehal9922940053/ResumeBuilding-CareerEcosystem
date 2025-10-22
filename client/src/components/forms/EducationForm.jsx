@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Plus, Trash2 } from 'lucide-react';
 import { useResume } from '../../hooks/useResume';
 import Input from '../common/Input';
@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 const EducationForm = () => {
   const { resumeData, updateResumeData } = useResume();
-  const [educations, setEducations] = useState(resumeData.education || []);
+  const educations = resumeData.education || [];
 
   const addEducation = () => {
     const newEducation = {
@@ -17,20 +17,19 @@ const EducationForm = () => {
       gpa: '',
       description: ''
     };
-    setEducations([...educations, newEducation]);
+    const updated = [...educations, newEducation];
+    updateResumeData('education', updated);
   };
 
   const updateEducation = (index, field, value) => {
     const updated = educations.map((edu, i) => 
       i === index ? { ...edu, [field]: value } : edu
     );
-    setEducations(updated);
     updateResumeData('education', updated);
   };
 
   const removeEducation = (index) => {
     const updated = educations.filter((_, i) => i !== index);
-    setEducations(updated);
     updateResumeData('education', updated);
   };
 

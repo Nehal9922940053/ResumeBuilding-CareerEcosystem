@@ -6,7 +6,7 @@ import Button from '../common/Button';
 
 const InternshipForm = () => {
   const { resumeData, updateResumeData } = useResume();
-  const [internships, setInternships] = useState(resumeData.internships || []);
+const internships = resumeData.internships || [];
 
   const addInternship = () => {
     const newInternship = {
@@ -16,20 +16,21 @@ const InternshipForm = () => {
       endDate: '',
       description: ''
     };
-    setInternships([...internships, newInternship]);
-  };
+    const updatedInternships = [...internships, newInternship];
+    updateResumeData('internships', updatedInternships);
+  }
+ 
 
   const updateInternship = (index, field, value) => {
     const updated = internships.map((intern, i) => 
       i === index ? { ...intern, [field]: value } : intern
     );
-    setInternships(updated);
+  
     updateResumeData('internships', updated);
   };
 
   const removeInternship = (index) => {
     const updated = internships.filter((_, i) => i !== index);
-    setInternships(updated);
     updateResumeData('internships', updated);
   };
 

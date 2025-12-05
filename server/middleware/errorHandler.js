@@ -1,3 +1,46 @@
+// const errorHandler = (err, req, res, next) => {
+//   let error = { ...err };
+//   error.message = err.message;
+
+//   // Log error for dev
+//   console.error(err);
+
+//   // Mongoose bad ObjectId
+//   if (err.name === 'CastError') {
+//     const message = 'Resource not found';
+//     error = { message, statusCode: 404 };
+//   }
+
+//   // Mongoose duplicate key
+//   if (err.code === 11000) {
+//     const message = 'Duplicate field value entered';
+//     error = { message, statusCode: 400 };
+//   }
+
+//   // Mongoose validation error
+//   if (err.name === 'ValidationError') {
+//     const message = Object.values(err.errors).map(val => val.message);
+//     error = { message, statusCode: 400 };
+//   }
+
+//   res.status(error.statusCode || 500).json({
+//     success: false,
+//     error: error.message || 'Server Error',
+//   });
+// };
+
+// const notFound = (req, res, next) => {
+//   const error = new Error(`Not Found - ${req.originalUrl}`);
+//   res.status(404);
+//   next(error);
+// };
+
+// module.exports = {
+//   errorHandler,
+//   notFound
+// };
+
+
 const errorHandler = (err, req, res, next) => {
   let error = { ...err };
   error.message = err.message;
@@ -23,16 +66,20 @@ const errorHandler = (err, req, res, next) => {
     error = { message, statusCode: 400 };
   }
 
-  res.status(error.statusCode || 500).json({
+  // Default to 500 for unhandled errors
+  const statusCode = error.statusCode || 500;
+  res.status(statusCode).json({
     success: false,
     error: error.message || 'Server Error',
   });
 };
 
 const notFound = (req, res, next) => {
-  const error = new Error(`Not Found - ${req.originalUrl}`);
-  res.status(404);
-  next(error);
+  // Directly respond with 404 - no need to create/pass error
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`,
+  });
 };
 
 module.exports = {

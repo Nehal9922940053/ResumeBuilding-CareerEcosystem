@@ -70,3 +70,5 @@ resumeSchema.pre('save', function(next) {
 const Resume = mongoose.model('Resume', resumeSchema);
 
 module.exports = Resume;
+
+//personal information is pending

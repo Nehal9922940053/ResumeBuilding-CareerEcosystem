@@ -125,14 +125,13 @@
 
 // export default Register;
 
-
-
-
 import React, { useState } from 'react';
-import { useAuth } from '../../hooks/useAuth';
+// import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import GoogleAuth from './GoogleAuth';
+import { useNavigate } from 'react-router-dom'; // Add this import
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -143,14 +142,26 @@ const Register = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const { register } = useAuth();
+  const { register, externalLogin } = useAuth(); // Add externalLogin
+
+  const navigate = useNavigate(); // Add this line
+
+  const handleGoogleSuccess = (user, token) => {
+    // Fix: Use externalLogin
+    externalLogin(user, token);
+    navigate('/dashboard');
+    console.log('Google registration successful!');
+  };
+
+  const handleGoogleError = (errorMsg) => {
+    setError(errorMsg);
+  };
 
   const handleChange = (e) => {
     setFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value
     }));
-    // Clear error when user starts typing
     if (error) setError('');
   };
 
@@ -158,7 +169,6 @@ const Register = () => {
     e.preventDefault();
     setError('');
 
-    // Validation
     if (formData.password !== formData.confirmPassword) {
       setError('Passwords do not match');
       return;
@@ -172,8 +182,8 @@ const Register = () => {
     setLoading(true);
     try {
       await register(formData.email, formData.password, formData.name);
-      // Registration successful - you might want to redirect here
       console.log('Registration successful!');
+      navigate('/dashboard'); // Optional: Redirect here too
     } catch (error) {
       console.error('Registration failed:', error);
       setError(error.message || 'Registration failed. Please try again.');
@@ -182,6 +192,7 @@ const Register = () => {
     }
   };
 
+  // ... (rest of JSX unchanged)
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
@@ -190,7 +201,6 @@ const Register = () => {
           <p className="text-gray-600">Start building your career story today</p>
         </div>
 
-        {/* Error Message */}
         {error && (
           <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
             {error}
@@ -259,7 +269,7 @@ const Register = () => {
           </div>
 
           <div className="mt-6">
-            <GoogleAuth />
+            <GoogleAuth onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
           </div>
         </div>
 

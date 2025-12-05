@@ -1,6 +1,9 @@
+
+
 import React, { useState } from 'react';
 import { Mail, Lock } from 'lucide-react';
-import { useAuth } from '../../hooks/useAuth';
+// import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '../../context/AuthContext';
 import Input from '../common/Input';
 import Button from '../common/Button';
 import GoogleAuth from './GoogleAuth';
@@ -11,9 +14,19 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-  const { login } = useAuth();
+const { login, externalLogin } = useAuth();
 
   const navigate = useNavigate();
+
+  const handleGoogleSuccess = (user, token) => {
+    // Integrate with useAuth (e.g., login(user, token))
+    login({ email: user.email }, ''); // Or update useAuth to handle external login
+    navigate('/dashboard');
+  };
+
+  const handleGoogleError = (errorMsg) => {
+    setError(errorMsg);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -88,7 +101,7 @@ const Login = () => {
           </div>
 
           <div className="mt-6">
-            <GoogleAuth />
+            <GoogleAuth onSuccess={handleGoogleSuccess} onError={handleGoogleError} />
           </div>
         </div>
 

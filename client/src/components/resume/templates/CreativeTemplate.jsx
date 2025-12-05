@@ -151,32 +151,32 @@ const CreativeTemplate = ({ data }) => {
         </p>
         <div className="flex flex-wrap gap-4 text-sm">
           {personalInfo?.email && (
-            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-black">
               📧 {personalInfo.email}
             </span>
           )}
           {personalInfo?.phone && (
-            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full  text-black">
               📱 {personalInfo.phone}
             </span>
           )}
           {personalInfo?.location && (
-            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full  text-black">
               📍 {personalInfo.location}
             </span>
           )}
           {personalInfo?.website && (
-            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-black">
               🌐 {personalInfo.website}
             </span>
           )}
           {personalInfo?.github && (
-            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-black">
               💻 {personalInfo.github}
             </span>
           )}
           {personalInfo?.linkedin && (
-            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full">
+            <span className="bg-white bg-opacity-20 px-3 py-1 rounded-full text-black">
               🔗 {personalInfo.linkedin}
             </span>
           )}

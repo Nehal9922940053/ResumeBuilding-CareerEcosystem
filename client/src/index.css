@@ -2,12 +2,32 @@
 @tailwind components;
 @tailwind utilities; */
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Roboto:wght@400;500;600&display=swap');
 
 @layer base {
   html {
     scroll-behavior: smooth;
   }
 }
+
+
+
+
+
+
+/* Enable class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Optional: Density variable fallbacks (used in JS) */
+:root {
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 0.75rem;
+}
+
+
+
+
 
 @layer components {
   .btn-primary {

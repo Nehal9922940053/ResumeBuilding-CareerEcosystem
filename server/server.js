@@ -35,10 +35,10 @@ const app = express();
 
 // Security middleware - Set security HTTP headers
 app.use(helmet({
-  contentSecurityPolicy: false,
+  contentSecurityPolicy: false,  // Already disabled
   crossOriginEmbedderPolicy: false,
+  crossOriginOpenerPolicy: { policy: 'same-origin-allow-popups' },  // Allow popups
 }));
-
 // Compression middleware - Compress responses
 app.use(compression());
 

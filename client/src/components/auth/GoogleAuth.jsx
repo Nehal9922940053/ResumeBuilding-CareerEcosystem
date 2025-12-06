@@ -100,12 +100,10 @@
 
 // export default GoogleAuth;
 
-
-
 import React, { useState, useCallback } from 'react';
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
 
-const GoogleAuth = ({ onSuccess, onError }) => {
+const GoogleAuth = ({ onSuccess, onError, buttonText = 'signup_with' }) => {
   const [loading, setLoading] = useState(false);
 
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
@@ -125,14 +123,13 @@ const GoogleAuth = ({ onSuccess, onError }) => {
     try {
       console.log('Sending credential to backend:', `${API_BASE_URL}/api/auth/google`);
       
-      // Send the credential token directly to your backend
       const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          credential: response.credential // Send the JWT credential
+          credential: response.credential
         }),
       });
 
@@ -174,16 +171,16 @@ const GoogleAuth = ({ onSuccess, onError }) => {
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
-      <div className="w-full">
+      <div className="w-full">  {/* Full-width container via CSS */}
         <GoogleLogin
           onSuccess={handleGoogleResponse}
           onError={handleGoogleError}
           theme="outline"
           size="large"
-          text="signup_with"
+          text={buttonText}
           shape="rectangular"
           logo_alignment="left"
-          width="100%"
+          // Remove width="100%" - use container class instead
           useOneTap={false}
           auto_select={false}
           cancel_on_tap_outside={true}
